@@ -1,5 +1,9 @@
-# react-redux-registration-login-example
+# ERP - React
 
-React + Redux - User Registration and Login Tutorial & Example
+### Installation: 
+* Run `npm install`
+* Semantic UI installation will start immediately, select automatic and the default path i.e './semantic' from the command line options
+* Once done, navigate to './sematic' and run `gulp build` to build the dist files.
 
-For documentation and further details go to http://jasonwatmore.com/post/2017/09/16/react-redux-user-registration-and-login-tutorial-example
+#### Start: 
+* Run `npm start`
