@@ -1,11 +1,6 @@
 {
-  "name": "react-redux-registration-login-example",
+  "name": "react-erp",
   "version": "1.0.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/cornflourblue/react-redux-registration-login-example.git"
-  },
-  "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open"
   },
@@ -41,7 +36,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-react": "^7.11.1",
     "file-loader": "^2.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "html-webpack-plugin": "^2.26.0",
     "path": "^0.12.7",
     "style-loader": "^0.23.1",
