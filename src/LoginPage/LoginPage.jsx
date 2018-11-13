@@ -18,7 +18,7 @@ class LoginPage extends React.Component {
     super(props);
 
     // reset login status
-    this.props.dispatch(userActions.logout());
+    // this.props.dispatch(userActions.logout());
 
     this.state = {
       username: '',
@@ -69,18 +69,15 @@ class LoginPage extends React.Component {
             </Header>
             <Form size="large" name="form" onSubmit={this.handleSubmit}>
               <Segment stacked>
-                {submitted &&
-                  !username && (
-                    <Message negative content="Username is required." />
-                  )}
-                {submitted &&
-                  !password && (
-                    <Message negative content="Password is required." />
-                  )}
-                {!loggingIn &&
-                  alert.type === 'alert-danger' && (
-                    <Message negative content={alert.message} />
-                  )}
+                {submitted && !username && (
+                  <Message negative content="Username is required." />
+                )}
+                {submitted && !password && (
+                  <Message negative content="Password is required." />
+                )}
+                {!loggingIn && alert.type === 'alert-danger' && (
+                  <Message negative content={alert.message} />
+                )}
                 <Form.Input
                   fluid
                   icon="user"
