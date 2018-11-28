@@ -1,5 +1,22 @@
-body > div,
-body > div > div,
-body > div > div > div.login-form {
+body {
   height: 100%;
+}
+
+div#app {
+  height: 100%;
+}
+
+div.main-content {
+  background: teal;
+}
+
+.topbar {
+  background: white;
+}
+
+div.no-right-border div {
+  border-radius: 0px 5px 5px 0px !important;
+}
+div.no-right-border input {
+  border-radius: 5px 0px 0px 5px !important;
 }

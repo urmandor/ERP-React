@@ -3,10 +3,14 @@ import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { history } from '../_helpers';
-import { alertActions } from '../_actions';
+import { alertActions, contractActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { DashboardPage } from '../DashboardPage';
 import { ViewContractsPage } from '../ViewContractsPage';
+import { AddContractPage } from '../AddContractPage';
+import { UpdateContractPage } from '../UpdateContractPage';
+import { ContractTracingPage } from '../ContractTracingPage';
+import { CurrentInventoryPage } from '../CurrentInventoryPage';
 import { LoginPage } from '../LoginPage';
 import { RegisterPage } from '../RegisterPage';
 
@@ -21,6 +25,11 @@ class App extends React.Component {
     });
   }
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    localStorage.getItem('user') && dispatch(contractActions.viewContracts());
+  }
+
   render() {
     return (
       <Router history={history}>
@@ -33,8 +42,33 @@ class App extends React.Component {
           />
           <PrivateRoute
             exact
+            path="/add-contract"
+            component={AddContractPage}
+          />
+          <PrivateRoute
+            exact
+            path="/update-contract"
+            component={UpdateContractPage}
+          />
+          <PrivateRoute
+            exact
             path="/contract-tracing"
-            component={ViewContractsPage}
+            component={ContractTracingPage}
+          />
+          <PrivateRoute
+            exact
+            path="/current-inventory"
+            component={CurrentInventoryPage}
+          />
+          <PrivateRoute
+            exact
+            path="/inventory-history"
+            component={CurrentInventoryPage}
+          />
+          <PrivateRoute
+            exact
+            path="/inventory-tracing"
+            component={ContractTracingPage}
           />
           <Route path="/login" component={LoginPage} />
           <Route path="/register" component={RegisterPage} />

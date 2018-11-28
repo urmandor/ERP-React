@@ -46,32 +46,37 @@ class MainLayout extends React.Component {
     const { isSideBarVisible } = this.state;
 
     return (
-      <div>
+      <React.Fragment>
         <Topbar
           toggleVisibility={this.toggleSideBarVisibility}
           logout={this.logout}
         />
-        <Sidebar.Pushable as={Segment} attached="bottom">
-          <HorizontalSidebar
-            visible={isSideBarVisible}
-            animation="overlay"
-            direction="left"
-            tab={this.props.tab}
-            changeTab={this.changeTab}
-            toggleMainTab={this.toggleMainTab}
-          />
-          <Sidebar.Pusher>
-            <div
-              style={{
-                paddingLeft: isSideBarVisible ? 260 : 0,
-                background: 'teal',
-              }}
-            >
-              <Segment basic>{this.props.children}</Segment>
-            </div>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
-      </div>
+        <div className="main-content">
+          <Sidebar.Pushable
+            style={{ minHeight: '100vh', background: 'transparent' }}
+            as={Segment}
+            attached="bottom"
+          >
+            <HorizontalSidebar
+              visible={isSideBarVisible}
+              animation="overlay"
+              direction="left"
+              tab={this.props.tab}
+              changeTab={this.changeTab}
+              toggleMainTab={this.toggleMainTab}
+            />
+            <Sidebar.Pusher>
+              <div
+                style={{
+                  paddingLeft: isSideBarVisible ? 260 : 0,
+                }}
+              >
+                <Segment basic>{this.props.children}</Segment>
+              </div>
+            </Sidebar.Pusher>
+          </Sidebar.Pushable>
+        </div>
+      </React.Fragment>
     );
   }
 }

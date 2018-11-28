@@ -2,17 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { MainLayout } from '../_components/MainLayout';
-import { VictoryLine } from 'victory';
+import { Grid, Segment, Label, Table, Header, Loader } from 'semantic-ui-react';
 
-import { Grid, Segment, Label, Table, Progress } from 'semantic-ui-react';
+import { contractActions } from '../_actions';
 
-const ContactTable = () => {
+const ContactTable = data => {
   return (
     <Table celled selectable>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell>Contract Id</Table.HeaderCell>
+          <Table.HeaderCell>Contract Number</Table.HeaderCell>
           <Table.HeaderCell>Contract Name</Table.HeaderCell>
           <Table.HeaderCell>Delivery Date</Table.HeaderCell>
           <Table.HeaderCell>Status</Table.HeaderCell>
@@ -22,18 +21,20 @@ const ContactTable = () => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {Array.apply(null, Array(10)).map((val, index) => {
+        {data.map((val, index) => {
           return (
             <Table.Row key={index}>
-              <Table.Cell>101</Table.Cell>
-              <Table.Cell>Muhammad Textile</Table.Cell>
-              <Table.Cell>2016-04-28</Table.Cell>
+              <Table.Cell>{val.contractNumber}</Table.Cell>
+              <Table.Cell>{val.contractName}</Table.Cell>
+              <Table.Cell>{val.deliveryDate}</Table.Cell>
               <Table.Cell>
-                <Label color="green">Approved</Label>
+                <Label color="green">{val.status}</Label>
               </Table.Cell>
-              <Table.Cell>31*31 76*66 102''</Table.Cell>
-              <Table.Cell>900lbs</Table.Cell>
-              <Table.Cell>2600m</Table.Cell>
+              <Table.Cell>{`${val.wrapCount}*${val.weftCount} ${val.read}*${
+                val.pick
+              } ${val.width}"`}</Table.Cell>
+              <Table.Cell>{val.wrapBeam}</Table.Cell>
+              <Table.Cell>{val.weftQuantity}</Table.Cell>
             </Table.Row>
           );
         })}
@@ -48,32 +49,31 @@ class ViewContracts extends React.Component {
   }
 
   render() {
-    const data = [
-      { x: 1, y: 13000 },
-      { x: 2, y: 16500 },
-      { x: 3, y: 14250 },
-      { x: 4, y: 19000 },
-    ];
-
+    const { contracts } = this.props;
     return (
-      <MainLayout>
-        <Grid columns={1}>
-          <Grid.Column>
-            <Segment>{ContactTable()}</Segment>
-          </Grid.Column>
-        </Grid>
-      </MainLayout>
+      <Grid columns={1}>
+        <Grid.Column>
+          <Segment style={{ minHeight: 500 }}>
+            <React.Fragment>
+              <Header color="teal" size="large">
+                View Contracts
+              </Header>
+              <Loader active={contracts.loading}>Loading</Loader>
+              {contracts.loading ||
+                (contracts.items && ContactTable(contracts.items))}
+            </React.Fragment>
+          </Segment>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const { users, authentication, tab } = state;
-  const { user } = authentication;
+  const { contracts } = state;
+  console.log('COMPONET: ', contracts);
   return {
-    user,
-    users,
-    tab,
+    contracts,
   };
 }
 

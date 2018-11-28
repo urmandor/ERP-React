@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { Icon, Menu } from 'semantic-ui-react';
 
 export const Topbar = ({ toggleVisibility, logout }) => (
-  <Menu secondary attached="top">
+  <Menu secondary attached="top" className="topbar">
     <Menu.Item onClick={() => toggleVisibility()}>
       <Icon name="sidebar" />
     </Menu.Item>

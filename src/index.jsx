@@ -8,6 +8,7 @@ import { App } from './App';
 import { configureFakeBackend } from './_helpers';
 
 import '../semantic/dist/semantic.min.css';
+import './styles/styles.css';
 
 configureFakeBackend();
 

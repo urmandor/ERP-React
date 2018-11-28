@@ -1,5 +1,6 @@
 // array in local storage for registered users
 let users = JSON.parse(localStorage.getItem('users')) || [];
+let contracts = JSON.parse(localStorage.getItem('contracts')) || [];
 
 export function configureFakeBackend() {
 	let realFetch = window.fetch;
@@ -90,6 +91,93 @@ export function configureFakeBackend() {
 
 					// respond 200 OK
 					resolve({ ok: true, text: () => Promise.resolve() });
+
+					return;
+				}
+
+				if (url.endsWith('/contracts') && opts.method === 'GET') {
+					if (
+						opts.headers &&
+						opts.headers.Authorization === 'Bearer fake-jwt-token'
+					) {
+						// respond 200 OK with contracts list
+						contracts = JSON.parse(localStorage.getItem('contracts')) || [];
+						resolve({
+							ok: true,
+							text: () => Promise.resolve(JSON.stringify(contracts)),
+						});
+					} else {
+						// return 401 not authorised if token is null or invalid
+						reject('Unauthorised');
+					}
+					return;
+				}
+
+				if (url.endsWith('/contracts') && opts.method === 'POST') {
+					if (
+						opts.headers &&
+						opts.headers.Authorization === 'Bearer fake-jwt-token'
+					) {
+						// respond 200 OK with contracts list
+						const contract = opts.body;
+						contract.status = 'Approved';
+						contract.id = contracts.length;
+						contract.progress = Math.random() * 100;
+						contracts = JSON.parse(localStorage.getItem('contracts')) || [];
+						if (
+							contracts.filter(
+								val => val.contractNumber === contract.contractNumber,
+							).length
+						) {
+							return reject('Contract number already exists');
+						}
+
+						contracts.push(contract);
+						localStorage.setItem('contracts', JSON.stringify(contracts));
+						resolve({
+							ok: true,
+							text: () => Promise.resolve(JSON.stringify(contract)),
+						});
+					} else {
+						// return 401 not authorised if token is null or invalid
+						reject('Unauthorised');
+					}
+					return;
+				}
+
+				if (url.match(/\/contracts\/\d+$/) && opts.method === 'PUT') {
+					if (
+						opts.headers &&
+						opts.headers.Authorization === 'Bearer fake-jwt-token'
+					) {
+						// find contract by contractNumber in contracts array
+						const urlParts = url.split('/');
+						const contractNumber = Number(urlParts[urlParts.length - 1]);
+						let index = -1;
+						contracts = JSON.parse(localStorage.getItem('contracts')) || [];
+						const updatedContracts = contracts.map((contract, i) => {
+							if (Number(contract.contractNumber) === contractNumber) {
+								index = i;
+								return { ...contract, ...opts.body };
+							}
+							return contract;
+						});
+						if (index === -1) {
+							return reject('Contract number not found');
+						}
+
+						localStorage.setItem('contracts', JSON.stringify(updatedContracts));
+
+						// respond 200 OK with contract
+						resolve({
+							ok: true,
+							text: () =>
+								Promise.resolve(JSON.stringify(updatedContracts[index])),
+						});
+					} else {
+						// return 401 not authorised if token is null or invalid
+						reject('Unauthorised');
+					}
 
 					return;
 				}

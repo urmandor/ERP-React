@@ -21,7 +21,7 @@ const ContactProgressTable = () => {
       <Table.Body>
         {Array.apply(null, Array(5)).map((val, index) => {
           return (
-            <React.Fragment>
+            <React.Fragment key={index}>
               <Table.Row>
                 <Table.Cell>101</Table.Cell>
                 <Table.Cell>Muhammad Textile</Table.Cell>
@@ -76,32 +76,30 @@ class Dashboard extends React.Component {
     ];
 
     return (
-      <MainLayout>
-        <Grid columns={2}>
-          <Grid.Column>
-            <Segment>
-              <VictoryChart theme={VictoryTheme.material}>
-                <VictoryLine data={data} />
-              </VictoryChart>
-            </Segment>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment>
-              <ContactProgressTable />
-            </Segment>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment>
-              <ContactProgressTable />
-            </Segment>
-          </Grid.Column>
-          <Grid.Column>
-            <Segment>
-              <ContactProgressTable />
-            </Segment>
-          </Grid.Column>
-        </Grid>
-      </MainLayout>
+      <Grid columns={2}>
+        <Grid.Column>
+          <Segment>
+            <VictoryChart theme={VictoryTheme.material}>
+              <VictoryLine data={data} />
+            </VictoryChart>
+          </Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment>
+            <ContactProgressTable />
+          </Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment>
+            <ContactProgressTable />
+          </Segment>
+        </Grid.Column>
+        <Grid.Column>
+          <Segment>
+            <ContactProgressTable />
+          </Segment>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
