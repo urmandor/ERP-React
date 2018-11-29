@@ -9,6 +9,9 @@ npm-debug.log*
 # node-waf configuration
 .lock-wscript
 
+# lock file
+package-lock.json
+
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
